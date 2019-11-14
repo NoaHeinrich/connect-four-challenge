@@ -12,5 +12,17 @@ class Game
 
   def start
     puts 'A new game has begun!'
+    until @board.game_won?
+      @board.print_grid
+      puts "#{@current_player} it is your turn:"
+      column = gets.chomp.to_i
+      unless @board.column_full?(column)
+        @board.drop_checker(@current_player, column)
+        @current_player == :black ? @current_player = :red : @current_player = :black
+      end
+    end
+    @board.print_grid
+    puts "Winner!"
   end
+
 end

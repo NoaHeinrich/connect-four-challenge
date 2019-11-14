@@ -8,4 +8,8 @@ class BoardTest < MiniTest::Test
   def test_the_truth
     assert_equal true, true
   end
+
+  def test_board_size
+    assert_equal 6, @board.rows.length
+  end
 end
