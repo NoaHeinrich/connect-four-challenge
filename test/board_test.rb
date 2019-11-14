@@ -4,7 +4,6 @@ class BoardTest < MiniTest::Test
   def setup
     @board = Board.new
   end
-
   def test_the_truth
     assert_equal true, true
   end
@@ -46,5 +45,12 @@ class BoardTest < MiniTest::Test
     @board.rows[4][1] = :black
     @board.rows[5][0] = :black
     assert_equal true, @board.check_diagonal
+  end
+
+  def test_drop_checker
+    @board.generate_board
+
+    assert_equal true, @board.drop_checker(:red, 0)
+    assert_equal "O", @board.rows[5][0]
   end
 end

@@ -1,7 +1,7 @@
 # Use this as a sketch of how your Board class could look, you can fill in these
 # methods, or make a different class from scratch
 require 'tty-table'
-
+require 'colored2'
 class Board
   attr_reader :table
   attr_accessor :rows
@@ -24,7 +24,7 @@ class Board
     row = 5
     while row >= 0
       if @rows[row][column] == ""
-        @rows[row][column] = color
+        @rows[row][column] = "O".send(color)
         @last_move = [row, column]
         return true
       end
@@ -111,6 +111,7 @@ class Board
 
   def check_right_down(row, column)
     if @rows[row][column] != "" && @rows[row][column] == @rows[row+1][column+1] && @rows[row][column] == @rows[row+2][column+2] && @rows[row][column] == @rows[row+3][column+3]
+
       true
     else
       false
