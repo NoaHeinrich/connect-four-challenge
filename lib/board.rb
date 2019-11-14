@@ -8,6 +8,7 @@ class Board
 
   def initialize
     generate_board
+    @last_move = []
   end
 
   # [
@@ -24,6 +25,7 @@ class Board
     while row >= 0
       if @rows[row][column] == ""
         @rows[row][column] = color
+        @last_move = [row, column]
         return true
       end
       row -= 1
@@ -89,11 +91,42 @@ class Board
   end
 
   def check_diagonal
+    win = false
+    (0..2).each do |row|
+      @rows[row].each_with_index do |cell, column|
+        if column < 3
+          win = check_right_down(row, column)
+        elsif column > 3
+          win = check_left_down(row, column)
+        else
+          check_right_down(row, column) ? win = true : win = check_left_down(row, column)
+        end
+        if win
+          return true
+        end
+      end
+    end
+    false
+  end
 
+  def check_right_down(row, column)
+    if @rows[row][column] != "" && @rows[row][column] == @rows[row+1][column+1] && @rows[row][column] == @rows[row+2][column+2] && @rows[row][column] == @rows[row+3][column+3]
+      true
+    else
+      false
+    end
+  end
+
+  def check_left_down(row, column)
+    if @rows[row][column] != "" && @rows[row][column] == @rows[row+1][column-1] && @rows[row][column] == @rows[row+2][column-2] && @rows[row][column] == @rows[row+3][column-3]
+      true
+    else
+      false
+    end
   end
 
   def game_won?
-    if check_horizontal || check_vertical
+    if check_horizontal || check_vertical || check_diagonal
       true
     else
       false
