@@ -49,8 +49,9 @@ class BoardTest < MiniTest::Test
 
   def test_drop_checker
     @board.generate_board
-
     assert_equal true, @board.drop_checker(:red, 0)
-    assert_equal "O", @board.rows[5][0]
+    assert_equal "\e[31mO\e[0m", @board.rows[5][0]
+    assert_equal true, @board.drop_checker(:black, 0)
+    assert_equal "\e[30mO\e[0m", @board.rows[4][0]
   end
 end
